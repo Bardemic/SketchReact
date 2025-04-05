@@ -14,14 +14,30 @@ CORS(app)
 
 @app.route('/generate', methods=['POST'])
 def generate_html():
-    # image = PIL.Image.open(image_path)
-    image = request.files.get('image')
+    if 'image' not in request.files:
+        return 'No image file provided', 400
+        
+    image_file = request.files['image']
+    # Read the image data once
+    image_data = image_file.read()
+    
     prompt = "Can you generate an HTML code for this image which is a mockup of a website? Match the features as much as you can. Make sure you include everything that is in the image and all text. Please don't include any extra text besides the HTML that is used to generate the website."
 
     client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
     response = client.models.generate_content(
         model="gemini-2.0-flash",
-        contents=[prompt, image])
+        contents=[
+            types.Content(
+                parts=[
+                    types.Part(text=prompt),
+                    types.Part(inline_data=types.Blob(
+                        mime_type='image/png',
+                        data=image_data
+                    ))
+                ]
+            )
+        ]
+    )
 
     # Extract HTML code from the response and remove markdown formatting
     html_content = response.text.strip()

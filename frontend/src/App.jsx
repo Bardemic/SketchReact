@@ -27,9 +27,11 @@ function App() {
         scale: 2 // Higher quality export
       })
 
-      // Create FormData and append the blob as a file
+      // Create FormData and append the blob as a file with proper MIME type
       const formData = new FormData()
-      formData.append('image', blob, 'sketch.png')
+      // Create a new File object with the proper MIME type
+      const file = new File([blob], 'sketch.png', { type: 'image/png' })
+      formData.append('image', file)
 
       // Send to your backend
       const response = await fetch('http://localhost:3000/generate', {
