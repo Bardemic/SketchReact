@@ -6,6 +6,7 @@ from flask_cors import CORS
 import PIL.Image
 import dotenv
 import os
+from io import BytesIO
 
 dotenv.load_dotenv()
 
@@ -20,6 +21,22 @@ def generate_html():
     image_file = request.files['image']
     # Read the image data once
     image_data = image_file.read()
+    
+    # Convert image to PIL Image and ensure white background
+    image = PIL.Image.open(BytesIO(image_data))
+    
+    # Convert the image to RGBA if it isn't already
+    if image.mode != 'RGBA':
+        image = image.convert('RGBA')
+    
+    # Create a white background image
+    background = PIL.Image.new('RGBA', image.size, (255, 255, 255, 255))
+    
+    # Composite the image onto the background
+    composite = PIL.Image.alpha_composite(background, image)
+    
+    # Convert back to RGB (removing alpha channel) and save
+    composite.convert('RGB').save('test_image.png', 'PNG')
     
     prompt = "Can you generate an HTML code for this image which is a mockup of a website? Match the features as much as you can. Make sure you include everything that is in the image and all text. Please don't include any extra text besides the HTML that is used to generate the website."
 
