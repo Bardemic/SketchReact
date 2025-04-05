@@ -38,7 +38,7 @@ def generate_html():
     # Convert back to RGB (removing alpha channel) and save
     composite.convert('RGB').save('test_image.png', 'PNG')
     
-    prompt = "Can you generate an HTML code for this image which is a mockup of a website? Match the features as much as you can. Make sure you include everything that is in the image and all text. Please don't include any extra text besides the HTML that is used to generate the website."
+    prompt = "Can you generate an HTML code for this image which is a mockup of a website? Match the features as much as you can. Make sure you include everything that is in the image and all text. Assume that the boundary of the image is the boundary of the computer screen, and scale the elements accordingly. At the end can you make all the components look like ShadCN? Please don't include any extra text besides the HTML that is used to generate the website."
 
     client = genai.Client(api_key=os.getenv('GOOGLE_API_KEY'))
     response = client.models.generate_content(
