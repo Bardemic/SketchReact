@@ -1,6 +1,7 @@
 from google import genai
 from google.genai import types
 from flask import Flask, request
+from flask_cors import CORS
 
 import PIL.Image
 import dotenv
@@ -9,6 +10,8 @@ import os
 dotenv.load_dotenv()
 
 app = Flask(__name__)
+CORS(app)
+
 @app.route('/generate', methods=['POST'])
 def generate_html(image_path):
     # image = PIL.Image.open(image_path)
@@ -31,27 +34,7 @@ def generate_html(image_path):
 
 @app.route('/random', methods=['GET'])
 def random():
-    return '''<!DOCTYPE html>
-<html>
-<head>
-  <title>Random HTML Page</title>
-</head>
-<body>
-  <h1>Hello, Random Visitor!</h1>
-  <p>This is a random paragraph that doesn't really say anything meaningful. 
-     But it serves as an example of a basic HTML structure.</p>
-  
-  <ul>
-    <li>Random Fact #1: Banana is actually a berry.</li>
-    <li>Random Fact #2: The Eiffel Tower can be 15 cm taller during the summer.</li>
-    <li>Random Fact #3: Honey never spoils!</li>
-  </ul>
-  
-  <img src="https://via.placeholder.com/150" alt="Random placeholder image" />
-
-  <p>Thanks for stopping by and reading this random content!</p>
-</body>
-</html>'''
+    return '''<h1>This is a test</h1>'''
 
 
 if __name__ == '__main__':

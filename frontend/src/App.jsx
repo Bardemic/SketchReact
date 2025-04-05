@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import TldrawCanvas from './components/TldrawCanvas'
 
 function App() {
@@ -21,6 +21,24 @@ function App() {
       setIsConverting(false)
     }
   }
+  async function generatePage() {
+    /*
+    fetch('http://localhost:3000/generate', {
+      method: 'POST',
+      body: JSON.stringify({ image: 'image.png' })
+    })
+    .then(response => response.json())
+    .then(data => setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />))*/
+    fetch('http://localhost:3000/random', {
+      method: 'GET',
+    })
+    .then(response => response.text())
+    .then(data => setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />))
+  }
+
+  useEffect(() => {
+    generatePage()
+  }, [])
 
   return (
     <div className="flex flex-col w-screen h-screen">
