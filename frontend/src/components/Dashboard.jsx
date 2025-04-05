@@ -66,13 +66,8 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col w-screen h-screen">
-      <TabHeader 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab} 
-      />
-      
       <div className="flex-1 relative">
-        {activeTab === 'canvas' ? (
+        <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%' }}>
           <CanvasSection
             editorRef={editorRef}
             isConverting={isConverting}
@@ -81,12 +76,18 @@ function Dashboard() {
             onConvert={handleConvertSketch}
             onTogglePreview={() => setShowPreview(!showPreview)}
           />
-        ) : (
-          <div className="w-full h-full flex items-center justify-center">
-            {reactPage}
-          </div>
-        )}
+        </div>
+        <div 
+          className="w-full h-full flex items-center justify-center" 
+          style={{ display: activeTab === 'test' ? 'flex' : 'none' }}
+        >
+          {reactPage}
+        </div>
       </div>
+      <TabHeader 
+        activeTab={activeTab} 
+        onTabChange={setActiveTab} 
+      />
     </div>
   )
 }
