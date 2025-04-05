@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import TldrawCanvas from './components/TldrawCanvas'
 
 function App() {
@@ -6,17 +6,47 @@ function App() {
   const [reactPage, setReactPage] = useState(<div className="text-blue-500 w-full h-full text-2xl">Test 123</div>)
   const [showPreview, setShowPreview] = useState(true)
   const [isConverting, setIsConverting] = useState(false)
+  const editorRef = useRef(null)
 
   const handleConvertSketch = async () => {
     setIsConverting(true)
     try {
-      // TODO: Implement the actual conversion logic here
-      // 1. Get the canvas data
-      // 2. Send it to your backend
-      // 3. Update the reactPage with the result
+      const editor = editorRef.current
+      if (!editor) {
+        throw new Error('Editor not initialized')
+      }
+
+      const shapeIds = editor.getCurrentPageShapeIds()
+      if (shapeIds.size === 0) {
+        throw new Error('No shapes on the canvas')
+      }
+
+      const { blob } = await editor.toImage([...shapeIds], { 
+        format: 'png', 
+        background: true,
+        scale: 2 // Higher quality export
+      })
+
+      // Create FormData and append the blob as a file
+      const formData = new FormData()
+      formData.append('image', blob, 'sketch.png')
+
+      // Send to your backend
+      const response = await fetch('http://localhost:3000/generate', {
+        method: 'POST',
+        body: formData
+      })
+
+      if (!response.ok) {
+        throw new Error('Failed to convert sketch')
+      }
+
+      const data = await response.text()
+      setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />)
       setShowPreview(true)
     } catch (error) {
       console.error('Error converting sketch:', error)
+      alert(error.message)
     } finally {
       setIsConverting(false)
     }
@@ -60,7 +90,7 @@ function App() {
       <div className="flex-1 relative">
         {activeTab === 'canvas' ? (
           <div className="w-full h-full">
-            <TldrawCanvas />
+            <TldrawCanvas editorRef={editorRef} />
             
             {/* Convert Button */}
             <button
