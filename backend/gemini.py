@@ -13,7 +13,7 @@ app = Flask(__name__)
 CORS(app)
 
 @app.route('/generate', methods=['POST'])
-def generate_html(image_path):
+def generate_html():
     # image = PIL.Image.open(image_path)
     image = request.files.get('image')
     prompt = "Can you generate an HTML code for this image which is a mockup of a website? Match the features as much as you can. Make sure you include everything that is in the image and all text. Please don't include any extra text besides the HTML that is used to generate the website."
