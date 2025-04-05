@@ -24,15 +24,16 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
-  place-items: center;
-  min-width: 320px;
-  min-height: 100vh;
+  padding: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
 }
 
 h1 {
-  font-size: 3.2em;
+  font-size: 2em;
   line-height: 1.1;
+  margin: 0;
 }
 
 button {
@@ -54,6 +55,11 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
+/* Override tldraw styles if needed */
+.tl-container {
+  background-color: #242424;
+}
+
 @media (prefers-color-scheme: light) {
   :root {
     color: #213547;
@@ -64,5 +70,8 @@ button:focus-visible {
   }
   button {
     background-color: #f9f9f9;
+  }
+  .tl-container {
+    background-color: #ffffff;
   }
 }
