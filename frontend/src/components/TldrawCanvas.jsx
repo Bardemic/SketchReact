@@ -1,16 +1,27 @@
 import { Tldraw, DefaultStylePanel, DefaultStylePanelContent, useEditor, useRelevantStyles } from '@tldraw/tldraw'
 import '@tldraw/tldraw/tldraw.css'
-import { useCallback, useState } from 'react'
+import { useCallback, useState, useRef, useEffect } from 'react'
 import Button from './Button'
 
-const CustomStylePanel = ({ isOpen, onClose }) => {
+const CustomStylePanel = ({ isOpen, onClose, onHeightChange }) => {
   const editor = useEditor()
   const styles = useRelevantStyles()
+  const panelRef = useRef(null)
+
+  useEffect(() => {
+    if (isOpen && panelRef.current) {
+      const height = panelRef.current.getBoundingClientRect().height
+      onHeightChange?.(height)
+    } else {
+      onHeightChange?.(0)
+    }
+  }, [isOpen, onHeightChange])
 
   if (!isOpen) return null
 
   return (
     <div 
+      ref={panelRef}
       className="absolute right-4 top-16 bg-white shadow-lg rounded-lg z-[9999]"
       style={{ maxHeight: 'calc(100vh - 120px)', overflowY: 'auto' }}
     >
@@ -24,7 +35,7 @@ const CustomStylePanel = ({ isOpen, onClose }) => {
   )
 }
 
-const TldrawCanvas = ({ editorRef }) => {
+const TldrawCanvas = ({ editorRef, onStylePanelChange, onStylePanelHeightChange }) => {
   const [isStylePanelOpen, setIsStylePanelOpen] = useState(false)
 
   const handleMount = useCallback((editor) => {
@@ -35,15 +46,21 @@ const TldrawCanvas = ({ editorRef }) => {
   }, [editorRef])
 
   const handleStylePanelToggle = useCallback(() => {
-    console.log('Button clicked')
-    setIsStylePanelOpen(prev => !prev)
-  }, [])
+    const newValue = !isStylePanelOpen;
+    setIsStylePanelOpen(newValue);
+    onStylePanelChange?.(newValue);
+  }, [isStylePanelOpen, onStylePanelChange])
+
+  const handleStylePanelHeightChange = useCallback((height) => {
+    onStylePanelHeightChange?.(height)
+  }, [onStylePanelHeightChange])
 
   const components = {
     StylePanel: () => (
       <CustomStylePanel 
         isOpen={isStylePanelOpen} 
-        onClose={() => setIsStylePanelOpen(false)} 
+        onClose={() => setIsStylePanelOpen(false)}
+        onHeightChange={handleStylePanelHeightChange}
       />
     ),
     PageMenu: () => null
