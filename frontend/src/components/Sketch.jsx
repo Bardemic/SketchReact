@@ -252,14 +252,16 @@ function Sketch() {
                 {showCodePreview ? 'Hide Code' : 'View Code'}
               </button>
             </div>
-            <iframe
-              ref={iframeRef}
-              id="preview-iframe"
-              srcDoc={iframeContent}
-              title="Website Preview"
-              className="w-full max-h-screen max-h-screen h-full border-0"
-              sandbox="allow-scripts allow-same-origin allow-forms"
-            />
+            <div className="w-screen h-full p-4 bg-gray-800">
+              <iframe
+                ref={iframeRef}
+                id="preview-iframe"
+                srcDoc={iframeContent}
+                title="Website Preview"
+                className="w-full h-full max-h-screen h-full border-0"
+                sandbox="allow-scripts allow-same-origin allow-forms"
+              />
+            </div>
             <CodePreview
               showCodePreview={showCodePreview}
               onClose={handleToggleCodePreview}
