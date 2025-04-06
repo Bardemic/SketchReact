@@ -26,24 +26,29 @@ function LandingPage() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 text-white overflow-y-auto">
       {/* Navbar */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent py-6">
-        <div className="container mx-auto px-4 flex justify-between items-center">
-          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
+      <nav className="bg-gray-900 py-4 px-6 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <Link 
+            to="/" 
+            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+          >
             SketchReact
-          </span>
+          </Link>
           
-          <div className="flex items-center gap-6">
+          <div className="flex items-center gap-4">
             {loading ? (
               <div className="w-20 h-6 bg-gray-700 animate-pulse rounded"></div>
             ) : isAuthenticated ? (
               <>
-                <span className="text-gray-300 text-sm">{user?.email}</span>
+                <span className="text-gray-300">{user?.email}</span>
                 <Button 
                   to="/profile" 
-                  variant="primary"
-                  className="px-5 py-2 rounded-full font-medium"
+                  variant="icon"
+                  className="text-gray-300 hover:text-white hover:bg-gray-800"
                 >
-                  Profile
+                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
                 </Button>
               </>
             ) : (

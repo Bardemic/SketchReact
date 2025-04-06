@@ -38,19 +38,22 @@ function Dashboard() {
       <nav className="bg-gray-900 py-4 px-6 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <Link 
-            to="/dashboard" 
+            to="/" 
             className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
           >
             SketchReact
           </Link>
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center gap-4">
             <span className="text-gray-300">{user?.email}</span>
-            <Link 
+            <Button 
               to="/profile" 
-              className="text-sm text-gray-300 hover:text-white transition-colors duration-300"
+              variant="icon"
+              className="text-gray-300 hover:text-white hover:bg-gray-800"
             >
-              Profile
-            </Link>
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </Button>
           </div>
         </div>
       </nav>

@@ -43,6 +43,10 @@ function UserProfile() {
     }
   };
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col">
       {/* Navbar */}
@@ -56,19 +60,14 @@ function UserProfile() {
           </Link>
           
           <div className="flex items-center gap-4">
-            <Link 
-              to="/sketch" 
-              className="text-gray-300 hover:text-white transition-colors duration-300"
-            >
-              Sketch
-            </Link>
             <Button
-              variant="link"
-              onClick={handleLogout}
-              disabled={loading}
-              className="text-gray-300 hover:text-white"
+              variant="icon"
+              onClick={handleBack}
+              className="text-gray-300 hover:text-white hover:bg-gray-800"
             >
-              {loading ? 'Logging out...' : 'Log out'}
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
             </Button>
           </div>
         </div>
@@ -97,23 +96,16 @@ function UserProfile() {
                   {userData?.created_at ? new Date(userData.created_at).toLocaleDateString() : 'Loading...'}
                 </p>
               </div>
-            </div>
-            
-            <div className="mt-8 flex gap-4">
-              <Button
-                to="/sketch"
-                variant="primary"
-              >
-                Back to Sketch
-              </Button>
-              
-              <Button
-                variant="destructive"
-                onClick={handleLogout}
-                disabled={loading}
-              >
-                {loading ? 'Logging out...' : 'Log out'}
-              </Button>
+
+              <div className="mt-8">
+                <Button
+                  variant="destructive"
+                  onClick={handleLogout}
+                  disabled={loading}
+                >
+                  {loading ? 'Logging out...' : 'Log out'}
+                </Button>
+              </div>
             </div>
           </div>
         </div>
