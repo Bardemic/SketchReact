@@ -24,6 +24,14 @@ function Sketch() {
     const initializeSketch = async () => {
       try {
         if (isNewSketch) {
+          // Check if we're already creating a sketch to prevent duplicates
+          if (sessionStorage.getItem('creating_sketch') === 'true') {
+            return;
+          }
+          
+          // Set flag to prevent duplicate creation
+          sessionStorage.setItem('creating_sketch', 'true');
+          
           // Create a new sketch
           const { data, error } = await supabase
             .from('sketches')
@@ -39,6 +47,10 @@ function Sketch() {
 
           if (error) throw error;
           setSketchId(data.id);
+          
+          // Clear the flag after successful creation
+          sessionStorage.removeItem('creating_sketch');
+          
           // Update URL to include the new sketch ID without creating a new history entry
           navigate(`/sketch/${data.id}`, { replace: true });
         } else if (id) {
@@ -66,6 +78,10 @@ function Sketch() {
       } catch (error) {
         console.error('Error initializing sketch:', error);
         alert('Failed to initialize sketch');
+        // Clear the flag if there was an error to allow future attempts
+        if (isNewSketch) {
+          sessionStorage.removeItem('creating_sketch');
+        }
         navigate('/dashboard');
       }
     };
