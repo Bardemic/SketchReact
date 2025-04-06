@@ -70,10 +70,6 @@ Transform your hand-drawn sketches into functional websites instantly using AI.
 ### Database
 - Supabase (User Data & Sketch Storage)
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgments
 
 - [Claude](https://www.anthropic.com/claude) - AI Code Generation
