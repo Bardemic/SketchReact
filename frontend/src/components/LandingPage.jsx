@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
+import Button from './Button';
 
 function LandingPage() {
   const { isAuthenticated, user, loading } = useAuth();
@@ -37,12 +38,13 @@ function LandingPage() {
             ) : isAuthenticated ? (
               <>
                 <span className="text-gray-300 text-sm">{user?.email}</span>
-                <Link 
+                <Button 
                   to="/dashboard" 
-                  className="px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300"
+                  variant="primary"
+                  className="px-5 py-2 rounded-full font-medium"
                 >
                   Dashboard
-                </Link>
+                </Button>
               </>
             ) : (
               <>
@@ -52,12 +54,13 @@ function LandingPage() {
                 >
                   Log in
                 </Link>
-                <Link 
+                <Button 
                   to="/signup" 
-                  className="px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300"
+                  variant="primary"
+                  className="px-5 py-2 rounded-full font-medium"
                 >
                   Sign up
-                </Link>
+                </Button>
               </>
             )}
           </div>
@@ -73,12 +76,13 @@ function LandingPage() {
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mb-10">
             Transform your hand-drawn sketches into functional web pages instantly
           </p>
-          <Link 
+          <Button 
             to="/signup" 
-            className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-medium transition-colors duration-300"
+            variant="primary"
+            className="px-8 py-3 rounded-full text-lg font-medium"
           >
             Sign up
-          </Link>
+          </Button>
         </div>
       </div>
 

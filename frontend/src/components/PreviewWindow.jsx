@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from './Button'; // Import Button component
 
 const PreviewWindow = ({ showPreview, onClose, htmlContent }) => {
   if (!showPreview) {
@@ -24,14 +25,15 @@ const PreviewWindow = ({ showPreview, onClose, htmlContent }) => {
            style={{ height: `${headerHeightEstimate}px` }} // Give header explicit height
       >
         <h3 className="text-xs font-semibold text-gray-600">Preview (Scaled)</h3> {/* Smaller text */} 
-        <button
+        <Button
+          variant="icon" // Use icon variant
           onClick={onClose}
-          className="text-gray-400 hover:text-gray-600 text-lg font-bold leading-none p-0.5" // Smaller button/padding
+          className="text-gray-400 hover:text-gray-600 text-lg font-bold p-0.5" // Keep specific styles, adjust padding
           aria-label="Close preview"
-          style={{ lineHeight: '1' }} // Ensure button size is minimal
+          style={{ lineHeight: '1' }} // Keep inline style if necessary
         >
           &times;
-        </button>
+        </Button>
       </div>
 
       {/* Scaling Container: This div clips the scaled iframe */}

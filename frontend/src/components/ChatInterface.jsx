@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
+import Button from './Button'
 
 function ChatInterface({ onSendMessage, iframeId, sketchId }) {
   const [message, setMessage] = useState('')
@@ -84,12 +85,13 @@ function ChatInterface({ onSendMessage, iframeId, sketchId }) {
           placeholder="Describe the changes you want to make..."
           className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
         />
-        <button
+        <Button
           type="submit"
-          className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          variant="primary"
+          className="px-6 py-2"
         >
           Send
-        </button>
+        </Button>
       </form>
     </div>
   )

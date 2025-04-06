@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
 import { Link, useNavigate } from 'react-router-dom';
+import Button from './Button';
 
 function UserProfile() {
   const { user, logout } = useAuth();
@@ -61,13 +62,14 @@ function UserProfile() {
             >
               Sketch
             </Link>
-            <button
+            <Button
+              variant="link"
               onClick={handleLogout}
               disabled={loading}
-              className="text-gray-300 hover:text-white transition-colors duration-300"
+              className="text-gray-300 hover:text-white"
             >
               {loading ? 'Logging out...' : 'Log out'}
-            </button>
+            </Button>
           </div>
         </div>
       </nav>
@@ -98,20 +100,20 @@ function UserProfile() {
             </div>
             
             <div className="mt-8 flex gap-4">
-              <Link
+              <Button
                 to="/sketch"
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-300"
+                variant="primary"
               >
                 Back to Sketch
-              </Link>
+              </Button>
               
-              <button
+              <Button
+                variant="destructive"
                 onClick={handleLogout}
                 disabled={loading}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors duration-300"
               >
                 {loading ? 'Logging out...' : 'Log out'}
-              </button>
+              </Button>
             </div>
           </div>
         </div>

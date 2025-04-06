@@ -1,4 +1,5 @@
 import { Link, useLocation } from 'react-router-dom';
+import Button from './Button';
 
 function Navbar() {
   const location = useLocation();
@@ -15,12 +16,13 @@ function Navbar() {
         
         <div className="flex items-center gap-6">
           {isLandingPage ? (
-            <Link 
+            <Button 
               to="/dashboard" 
-              className="px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300"
+              variant="primary"
+              className="px-5 py-2 rounded-full font-medium"
             >
               Try It Now
-            </Link>
+            </Button>
           ) : (
             <Link 
               to="/" 

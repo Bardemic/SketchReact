@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
+import Button from './Button';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -64,9 +65,9 @@ function Login() {
             </h2>
             <p className="mt-2 text-center text-sm text-gray-400">
               Don't have an account?{' '}
-              <Link to="/signup" className="font-medium text-blue-400 hover:text-blue-300">
+              <Button to="/signup" variant="link" className="font-medium text-blue-400 hover:text-blue-300">
                 Sign up
-              </Link>
+              </Button>
             </p>
           </div>
 
@@ -110,28 +111,27 @@ function Login() {
 
             <div className="flex items-center justify-between">
               <div className="text-sm">
-                <Link to="/forgot-password" className="font-medium text-blue-400 hover:text-blue-300">
+                <Button to="/forgot-password" variant="link" className="font-medium text-blue-400 hover:text-blue-300">
                   Forgot your password?
-                </Link>
+                </Button>
               </div>
             </div>
 
             <div>
-              <button
+              <Button
                 type="submit"
                 disabled={loading}
-                className={`group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white ${
-                  loading ? 'bg-blue-600 opacity-70 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'
-                } focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500`}
+                variant="primary"
+                className="w-full"
               >
                 {loading ? 'Signing in...' : 'Sign in'}
-              </button>
+              </Button>
             </div>
 
             <div className="text-center mt-4">
-              <Link to="/" className="text-sm text-gray-400 hover:text-gray-300">
+              <Button to="/" variant="link" className="text-sm text-gray-400 hover:text-gray-300">
                 Return to home page
-              </Link>
+              </Button>
             </div>
           </form>
         </div>
