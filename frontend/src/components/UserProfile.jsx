@@ -8,6 +8,7 @@ function UserProfile() {
   const { user, logout } = useAuth();
   const [loading, setLoading] = useState(false);
   const [userData, setUserData] = useState(null);
+  const [sketchCount, setSketchCount] = useState(0);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -15,14 +16,24 @@ function UserProfile() {
       if (!user) return;
       
       try {
-        const { data, error } = await supabase
+        // Fetch user data
+        const { data: userData, error: userError } = await supabase
           .from('users')
           .select('*')
           .eq('user_id', user.id)
           .single();
           
-        if (error) throw error;
-        setUserData(data);
+        if (userError) throw userError;
+        setUserData(userData);
+
+        // Fetch sketch count
+        const { count, error: countError } = await supabase
+          .from('sketches')
+          .select('*', { count: 'exact' })
+          .eq('user_id', user.id);
+
+        if (countError) throw countError;
+        setSketchCount(count || 0);
       } catch (error) {
         console.error('Error fetching user data:', error.message);
       }
@@ -86,8 +97,8 @@ function UserProfile() {
               </div>
               
               <div>
-                <p className="text-gray-400 text-sm">User ID</p>
-                <p className="text-white text-sm truncate">{user?.id}</p>
+                <p className="text-gray-400 text-sm">Total Sketches</p>
+                <p className="text-white">{sketchCount}</p>
               </div>
               
               <div>
