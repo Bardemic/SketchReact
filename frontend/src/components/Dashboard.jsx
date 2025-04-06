@@ -4,11 +4,13 @@ import { useState, useEffect } from 'react';
 import { supabase } from '../lib/supabaseClient';
 import Button from './Button';
 import SketchesGrid from './SketchesGrid';
+import { useNavigate } from 'react-router-dom';
 
 function Dashboard() {
   const { user } = useAuth();
   const [sketches, setSketches] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchSketches = async () => {
@@ -32,6 +34,10 @@ function Dashboard() {
     }
   }, [user]);
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-gray-900 to-gray-800 flex flex-col">
       {/* Navbar */}
@@ -44,6 +50,15 @@ function Dashboard() {
             SketchReact
           </Link>
           <div className="flex items-center gap-4">
+            <Button
+              variant="icon"
+              onClick={handleBack}
+              className="text-gray-300 hover:text-white hover:bg-gray-800"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </Button>
             <span className="text-gray-300">{user?.email}</span>
             <Button 
               to="/profile" 

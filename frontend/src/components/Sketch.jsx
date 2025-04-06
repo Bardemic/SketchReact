@@ -6,6 +6,7 @@ import ChatInterface from './ChatInterface';
 import TabHeader from './TabHeader';
 import CodePreview from './CodePreview';
 import { supabase } from '../lib/supabaseClient';
+import Button from './Button';
 
 function Sketch() {
   const [activeTab, setActiveTab] = useState('canvas')
@@ -65,7 +66,6 @@ function Sketch() {
             .single();
 
           if (error) {
-            // If we get an error, this sketch doesn't exist or user doesn't have permission
             console.error('Error fetching sketch:', error);
             navigate('/forbidden');
             return;
@@ -96,7 +96,6 @@ function Sketch() {
         if (isNewSketch) {
           sessionStorage.removeItem('creating_sketch');
         }
-        // Redirect to forbidden page instead of dashboard for sketch access issues
         navigate('/forbidden');
       }
     };
@@ -115,16 +114,21 @@ function Sketch() {
 
       const snapshot = editor.store.getSnapshot();
       
-      const { error } = await supabase
-        .from('sketches')
-        .update({
-          whiteboard: snapshot,
-          last_modified: new Date().toISOString()
-        })
-        .eq('id', sketchId)
-        .eq('user_id', user.id);
+      // Only update if there are actual changes to save
+      if (JSON.stringify(snapshot) !== JSON.stringify(editor.store.previousSnapshot)) {
+        editor.store.previousSnapshot = snapshot;
+        
+        const { error } = await supabase
+          .from('sketches')
+          .update({
+            whiteboard: snapshot,
+            last_modified: new Date().toISOString()
+          })
+          .eq('id', sketchId)
+          .eq('user_id', user.id);
 
-      if (error) throw error;
+        if (error) throw error;
+      }
     } catch (error) {
       console.error('Error saving sketch state:', error);
     }
@@ -193,6 +197,9 @@ function Sketch() {
     const editor = editorRef.current;
     if (!editor) return;
 
+    // Store initial snapshot
+    editor.store.previousSnapshot = editor.store.getSnapshot();
+
     const handleChange = () => {
       saveSketchState();
     };
@@ -215,18 +222,46 @@ function Sketch() {
     setShowCodePreview(prev => !prev);
   }
 
+  const handleBack = () => {
+    navigate(-1);
+  };
+
   return (
     <div className="flex flex-col h-screen">
-      <div className="absolute top-0 right-0 p-4 z-50 bg-gray-800 w-full h-16 flex justify-end items-center">
-        <Link 
-          to="/profile"
-          className="text-sm text-gray-300 hover:text-white transition-colors duration-300 mr-4"
-        >
-          {user?.email || 'Profile'} ▾
-        </Link>
-      </div>
+      {/* Navbar */}
+      <nav className="bg-gray-900 py-4 px-6 shadow-md">
+        <div className="container mx-auto flex justify-between items-center">
+          <Link 
+            to="/" 
+            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+          >
+            SketchReact
+          </Link>
+          <div className="flex items-center gap-4">
+            <Button
+              variant="icon"
+              onClick={handleBack}
+              className="text-gray-300 hover:text-white hover:bg-gray-800"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+              </svg>
+            </Button>
+            <span className="text-gray-300">{user?.email}</span>
+            <Button 
+              to="/profile" 
+              variant="icon"
+              className="text-gray-300 hover:text-white hover:bg-gray-800"
+            >
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+              </svg>
+            </Button>
+          </div>
+        </div>
+      </nav>
       
-      <div className="flex-1 flex flex-col pt-16">
+      <div className="flex-1 flex flex-col">
         <div className="flex-1 relative">
           <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%' }}>
             <CanvasSection
