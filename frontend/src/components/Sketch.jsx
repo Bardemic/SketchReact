@@ -231,11 +231,9 @@ function Sketch() {
           <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%' }}>
             <CanvasSection
               editorRef={editorRef}
-              isConverting={isConverting}
               previewContent={iframeContent}
               showPreview={showCanvasPreview}
               onTogglePreview={handleToggleCanvasPreview}
-              onConvert={handleConvertSketch}
             />
           </div>
           
@@ -281,6 +279,8 @@ function Sketch() {
         <TabHeader 
           activeTab={activeTab} 
           onTabChange={setActiveTab} 
+          onConvert={handleConvertSketch}
+          isConverting={isConverting}
         />
       </div>
     </div>
