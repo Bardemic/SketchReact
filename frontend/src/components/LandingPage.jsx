@@ -30,10 +30,16 @@ function LandingPage() {
           
           <div className="flex items-center gap-6">
             <Link 
-              to="/dashboard" 
+              to="/login" 
+              className="text-gray-300 hover:text-white transition-colors duration-300"
+            >
+              Log in
+            </Link>
+            <Link 
+              to="/signup" 
               className="px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300"
             >
-              Try It Now
+              Sign up
             </Link>
           </div>
         </div>
@@ -49,10 +55,10 @@ function LandingPage() {
             Transform your hand-drawn sketches into functional web pages instantly
           </p>
           <Link 
-            to="/dashboard" 
+            to="/signup" 
             className="px-8 py-3 bg-blue-600 hover:bg-blue-700 rounded-full text-lg font-medium transition-colors duration-300"
           >
-            Try It Now
+            Sign up
           </Link>
         </div>
       </div>

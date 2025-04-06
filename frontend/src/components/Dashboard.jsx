@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef } from 'react'
+import { Link } from 'react-router-dom'
 import TabHeader from './TabHeader'
 import CanvasSection from './CanvasSection'
+import { useAuth } from '../contexts/AuthContext'
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('canvas')
@@ -8,6 +10,7 @@ function Dashboard() {
   const [showPreview, setShowPreview] = useState(true)
   const [isConverting, setIsConverting] = useState(false)
   const editorRef = useRef(null)
+  const { user } = useAuth()
 
   const handleConvertSketch = async () => {
     setIsConverting(true)
@@ -66,6 +69,16 @@ function Dashboard() {
 
   return (
     <div className="flex flex-col h-screen pt-16">
+      {/* User profile link */}
+      <div className="absolute top-0 right-0 p-4 z-50">
+        <Link 
+          to="/profile"
+          className="text-sm text-gray-300 hover:text-white transition-colors duration-300"
+        >
+          {user?.email || 'Profile'} ▾
+        </Link>
+      </div>
+      
       <div className="flex-1 relative">
         <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%', position: 'relative' }}>
           <CanvasSection
