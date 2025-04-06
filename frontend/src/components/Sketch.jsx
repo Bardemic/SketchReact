@@ -136,7 +136,6 @@ function Sketch() {
 
   const handleConvertSketch = async () => {
     setIsConverting(true)
-    setShowCanvasPreview(false);
     try {
       const editor = editorRef.current
       if (!editor) {
@@ -269,6 +268,7 @@ function Sketch() {
               previewContent={iframeContent}
               showPreview={showCanvasPreview}
               onTogglePreview={handleToggleCanvasPreview}
+              onRegenerate={handleConvertSketch}
             />
           </div>
           

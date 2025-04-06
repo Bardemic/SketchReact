@@ -7,6 +7,7 @@ const CanvasSection = ({
   previewContent,
   showPreview, 
   onTogglePreview,
+  onRegenerate,
 }) => {
   return (
     <div className="w-full h-full absolute inset-0">
@@ -28,6 +29,7 @@ const CanvasSection = ({
         showPreview={showPreview} 
         onClose={onTogglePreview}
         htmlContent={previewContent}
+        onRegenerate={onRegenerate}
       />
     </div>
   )
