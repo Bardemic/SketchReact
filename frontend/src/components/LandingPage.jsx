@@ -32,7 +32,7 @@ function LandingPage() {
             to="/" 
             className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
           >
-            SketchReact
+            WebSketch
           </Link>
           
           <div className="flex items-center gap-4">
@@ -75,8 +75,10 @@ function LandingPage() {
       {/* Hero Section */}
       <div className="container mx-auto px-4 pt-32 pb-32">
         <div className="flex flex-col items-center text-center">
-          <h1 className="text-5xl md:text-6xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-            SketchReact
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6">
+            <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
+              WebSketch
+            </span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mb-10">
             Transform your hand-drawn sketches into functional web pages instantly
@@ -170,7 +172,7 @@ function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-gray-700 py-8">
         <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} SketchReact. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} WebSketch. All rights reserved.</p>
         </div>
       </footer>
     </div>

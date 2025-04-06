@@ -7,9 +7,9 @@ function ForbiddenError() {
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent py-6">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <span className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-            SketchReact
-          </span>
+          <Link to="/" className="text-xl font-bold">
+            WebSketch
+          </Link>
           
           <div className="flex items-center gap-6">
             <Link 
@@ -71,7 +71,7 @@ function ForbiddenError() {
       {/* Footer */}
       <footer className="mt-auto py-8 w-full">
         <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} SketchReact. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} WebSketch. All rights reserved.</p>
         </div>
       </footer>
     </div>

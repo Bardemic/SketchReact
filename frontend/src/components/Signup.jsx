@@ -70,7 +70,7 @@ function Signup() {
             to="/" 
             className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
           >
-            SketchReact
+            WebSketch
           </Link>
         </div>
       </nav>
@@ -79,9 +79,7 @@ function Signup() {
       <div className="flex-1 flex items-center justify-center px-4 sm:px-6 lg:px-8">
         <div className="max-w-md w-full space-y-8 bg-gray-800 p-8 rounded-xl shadow-lg">
           <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
-              Create your account
-            </h2>
+            <h2 className="text-3xl font-bold mb-6 text-center text-gray-800">Welcome to WebSketch</h2>
             <p className="mt-2 text-center text-sm text-gray-400">
               Already have an account?{' '}
               <Button to="/login" variant="link" className="font-medium text-blue-400 hover:text-blue-300">

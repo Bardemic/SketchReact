@@ -273,7 +273,7 @@ function Sketch() {
             to="/" 
             className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
           >
-            SketchReact
+            WebSketch
           </Link>
           <div className="flex items-center gap-4">
             <Button

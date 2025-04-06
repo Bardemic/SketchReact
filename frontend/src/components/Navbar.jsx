@@ -10,7 +10,7 @@ function Navbar() {
       <div className="container mx-auto px-4 flex justify-between items-center">
         <Link to="/" className="text-xl font-bold text-white flex items-center">
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
-            SketchReact
+            WebSketch
           </span>
         </Link>
         

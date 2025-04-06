@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 # SketchReact
 
 Transform your hand-drawn sketches into functional React components instantly using AI.
@@ -82,3 +83,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - [TLDraw](https://www.tldraw.com/) - Sketch Canvas
 - [Monaco Editor](https://microsoft.github.io/monaco-editor/) - Code Editor
 - [Supabase](https://supabase.com/) - Database and Authentication
+=======
+# WebSketch
+>>>>>>> Stashed changes
