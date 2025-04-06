@@ -8,6 +8,8 @@ const CanvasSection = ({
   showPreview, 
   onTogglePreview,
   onRegenerate,
+  onChatMessage,
+  sketchId
 }) => {
   return (
     <div className="w-full h-full absolute inset-0">
@@ -30,6 +32,8 @@ const CanvasSection = ({
         onClose={onTogglePreview}
         htmlContent={previewContent}
         onRegenerate={onRegenerate}
+        onChatMessage={onChatMessage}
+        sketchId={sketchId}
       />
     </div>
   )

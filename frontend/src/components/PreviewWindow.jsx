@@ -1,7 +1,8 @@
 import React, { useState } from 'react'
 import Button from './Button'; // Import Button component
 import ChatInterface from './ChatInterface';
-const PreviewWindow = ({ showPreview, onClose, htmlContent, onRegenerate }) => {
+
+const PreviewWindow = ({ showPreview, onClose, htmlContent, onRegenerate, onChatMessage, sketchId }) => {
   const [isChatVisible, setIsChatVisible] = useState(false); // State for chat visibility
 
   if (!showPreview) {
@@ -22,8 +23,14 @@ const PreviewWindow = ({ showPreview, onClose, htmlContent, onRegenerate }) => {
         className="fixed bottom-24 right-4 bg-white rounded-lg shadow-2xl z-50 overflow-hidden flex flex-col"
         style={{ width: `${previewWidth}px`, height: `${previewHeight}px` }}
       >
-        {/* Conditionally render ChatInterface */}
-        {isChatVisible && <ChatInterface />} 
+        {/* Conditionally render ChatInterface and pass htmlContent and onSendMessage */}
+        {isChatVisible && (
+          <ChatInterface 
+            iframeContent={htmlContent} 
+            onSendMessage={onChatMessage}
+            sketchId={sketchId}
+          />
+        )} 
         {/* Header with Title, Toggle Button, and Close Button */}
         <div className="flex justify-between items-center p-1 px-2 border-b bg-gray-100 flex-shrink-0" // Reduced padding
              style={{ height: `${headerHeightEstimate}px` }} // Give header explicit height

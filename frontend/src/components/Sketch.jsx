@@ -269,6 +269,8 @@ function Sketch() {
               showPreview={showCanvasPreview}
               onTogglePreview={handleToggleCanvasPreview}
               onRegenerate={handleConvertSketch}
+              onChatMessage={handleChatMessage}
+              sketchId={sketchId}
             />
           </div>
           

@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { supabase } from '../lib/supabaseClient'
 import Button from './Button'
 
-function ChatInterface({ onSendMessage, iframeId, sketchId }) {
+function ChatInterface({ onSendMessage, iframeId, sketchId, iframeContent }) {
   const [message, setMessage] = useState('')
   const [isLoading, setIsLoading] = useState(false)
 
@@ -12,21 +12,24 @@ function ChatInterface({ onSendMessage, iframeId, sketchId }) {
 
     setIsLoading(true)
 
-    // Get the current HTML from the iframe
-    const iframeElement = document.getElementById(iframeId);
-    let currentHtml = '';
-    if (iframeElement && iframeElement.contentWindow && iframeElement.contentWindow.document) {
-      // Get the full HTML document from the iframe
-      currentHtml = iframeElement.contentWindow.document.documentElement.outerHTML;
-    } else {
-      console.error('Could not access iframe content.');
-      alert('Error: Could not read current preview content.');
-      return; // Stop if we can't get the HTML
+    // Determine the current HTML content directly
+    let htmlToSend = '';
+    if (iframeContent) {
+      htmlToSend = iframeContent;
+    } else if (iframeId) {
+      // Fallback to getting content directly from iframe element if ID is provided
+      const iframeElement = document.getElementById(iframeId);
+      if (iframeElement && iframeElement.srcdoc) {
+        htmlToSend = iframeElement.srcdoc;
+      } else {
+        console.warn(`ChatInterface: Could not find iframe with ID ${iframeId} or its srcdoc.`);
+      }
     }
 
     // Make sure we actually got some HTML
-    if (!currentHtml) {
-        alert('Error: Preview content is empty.');
+    if (!htmlToSend) {
+        alert('Error: Preview content is empty or could not be accessed.');
+        setIsLoading(false); // Reset loading state
         return;
     }
 
@@ -38,7 +41,7 @@ function ChatInterface({ onSendMessage, iframeId, sketchId }) {
         },
         body: JSON.stringify({
           message,
-          currentHtml // Send the iframe's current HTML
+          currentHtml: htmlToSend // Send the determined HTML directly
         })
       })
 
