@@ -1,7 +1,10 @@
 import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
+import { useAuth } from '../contexts/AuthContext';
 
 function LandingPage() {
+  const { isAuthenticated, user, loading } = useAuth();
+  
   // Enable scrolling on the landing page
   useEffect(() => {
     // Save the original styles
@@ -29,18 +32,34 @@ function LandingPage() {
           </span>
           
           <div className="flex items-center gap-6">
-            <Link 
-              to="/login" 
-              className="text-gray-300 hover:text-white transition-colors duration-300"
-            >
-              Log in
-            </Link>
-            <Link 
-              to="/signup" 
-              className="px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300"
-            >
-              Sign up
-            </Link>
+            {loading ? (
+              <div className="w-20 h-6 bg-gray-700 animate-pulse rounded"></div>
+            ) : isAuthenticated ? (
+              <>
+                <span className="text-gray-300 text-sm">{user?.email}</span>
+                <Link 
+                  to="/dashboard" 
+                  className="px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300"
+                >
+                  Dashboard
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link 
+                  to="/login" 
+                  className="text-gray-300 hover:text-white transition-colors duration-300"
+                >
+                  Log in
+                </Link>
+                <Link 
+                  to="/signup" 
+                  className="px-5 py-2 rounded-full bg-blue-600 hover:bg-blue-700 text-white font-medium transition-colors duration-300"
+                >
+                  Sign up
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </nav>
