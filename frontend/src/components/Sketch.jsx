@@ -61,7 +61,19 @@ function Sketch() {
             .eq('id', id)
             .single();
 
-          if (error) throw error;
+          if (error) {
+            // If we get an error, this sketch doesn't exist or user doesn't have permission
+            console.error('Error fetching sketch:', error);
+            navigate('/forbidden');
+            return;
+          }
+          
+          // Double check if the user is the owner of this sketch
+          if (data.user_id !== user.id) {
+            console.error('User does not own this sketch');
+            navigate('/forbidden');
+            return;
+          }
           
           setSketchId(data.id);
           
@@ -77,12 +89,12 @@ function Sketch() {
         }
       } catch (error) {
         console.error('Error initializing sketch:', error);
-        alert('Failed to initialize sketch');
         // Clear the flag if there was an error to allow future attempts
         if (isNewSketch) {
           sessionStorage.removeItem('creating_sketch');
         }
-        navigate('/dashboard');
+        // Redirect to forbidden page instead of dashboard for sketch access issues
+        navigate('/forbidden');
       }
     };
 

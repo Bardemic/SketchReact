@@ -5,6 +5,7 @@ import Login from './components/Login'
 import Signup from './components/Signup'
 import UserProfile from './components/UserProfile'
 import Dashboard from './components/Dashboard'
+import ForbiddenError from './components/ForbiddenError'
 import ProtectedRoute from './components/ProtectedRoute'
 import { AuthProvider } from './contexts/AuthContext'
 
@@ -48,6 +49,7 @@ function App() {
               </ProtectedRoute>
             } 
           />
+          <Route path="/forbidden" element={<ForbiddenError />} />
         </Routes>
       </Router>
     </AuthProvider>
