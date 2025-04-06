@@ -39,11 +39,11 @@ function LandingPage() {
               <>
                 <span className="text-gray-300 text-sm">{user?.email}</span>
                 <Button 
-                  to="/dashboard" 
+                  to="/profile" 
                   variant="primary"
                   className="px-5 py-2 rounded-full font-medium"
                 >
-                  Dashboard
+                  Profile
                 </Button>
               </>
             ) : (
@@ -77,11 +77,11 @@ function LandingPage() {
             Transform your hand-drawn sketches into functional web pages instantly
           </p>
           <Button 
-            to="/signup" 
+            to={isAuthenticated ? "/dashboard" : "/signup"}
             variant="primary"
             className="px-8 py-3 rounded-full text-lg font-medium"
           >
-            Sign up
+            {isAuthenticated ? "Go to Dashboard" : "Sign up"}
           </Button>
         </div>
       </div>
