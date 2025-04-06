@@ -71,7 +71,7 @@ function ForbiddenError() {
       {/* Footer */}
       <footer className="mt-auto py-8 w-full">
         <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} WebSketch. All rights reserved.</p>
+          <p>Made with Love ❤️</p>
         </div>
       </footer>
     </div>

@@ -172,7 +172,7 @@ function LandingPage() {
       {/* Footer */}
       <footer className="border-t border-gray-700 py-8">
         <div className="container mx-auto px-4 text-center text-gray-400">
-          <p>© {new Date().getFullYear()} WebSketch. All rights reserved.</p>
+          <p>Made with Love ❤️</p>
         </div>
       </footer>
     </div>
