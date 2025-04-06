@@ -2,6 +2,7 @@
 CREATE TABLE IF NOT EXISTS public.sketches (
   id BIGSERIAL PRIMARY KEY,
   user_id UUID NOT NULL REFERENCES auth.users(id) ON DELETE CASCADE,
+  name TEXT NOT NULL DEFAULT 'Untitled Sketch',
   whiteboard JSONB,
   page_result TEXT,
   last_modified TIMESTAMPTZ NOT NULL DEFAULT NOW(),

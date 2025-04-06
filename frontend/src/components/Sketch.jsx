@@ -38,6 +38,7 @@ function Sketch() {
             .insert([
               {
                 user_id: user.id,
+                name: 'Untitled Sketch',
                 whiteboard: null,
                 page_result: null
               }
