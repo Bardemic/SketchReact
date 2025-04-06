@@ -39,13 +39,12 @@ const TabHeader = ({ activeTab, onTabChange, onConvert, isConverting }) => {
       </div>
 
       {/* Generate Button */}
-      <Button 
+      <button 
         onClick={onConvert}
         disabled={isConverting}
-        variant="primary"
-        className={`px-6 py-2 rounded-lg shadow-lg transform transition-all duration-200 
-          ${isConverting ? 'scale-95 opacity-90' : 'hover:scale-105 hover:shadow-xl'} 
-          flex items-center bg-gradient-to-r from-blue-600 to-purple-600`}
+        className={`px-5 py-3 rounded-md shadow-lg transform transition-all duration-200 w-32
+          ${isConverting ? 'opacity-90' : 'hover:bg-gradient-to-r hover:from-blue-700 hover:to-purple-700'} 
+          flex items-center justify-center bg-gradient-to-r from-blue-600 to-purple-600 text-white`}
       >
         <span className="flex items-center gap-2">
           {isConverting ? (
@@ -65,7 +64,7 @@ const TabHeader = ({ activeTab, onTabChange, onConvert, isConverting }) => {
             </>
           )}
         </span>
-      </Button>
+      </button>
     </div>
   )
 }
