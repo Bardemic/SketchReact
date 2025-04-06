@@ -1,7 +1,7 @@
 import React from 'react'
 import Button from './Button';
 
-const TabHeader = ({ activeTab, onTabChange, onConvert, isConverting }) => {
+const TabHeader = ({ activeTab, onTabChange, onConvert, isConverting, hasOutput }) => {
   return (
     <div className="fixed top-20 left-1/2 transform -translate-x-1/2 flex justify-center items-center gap-4 z-40">
       {/* Tab Container */}
@@ -25,9 +25,13 @@ const TabHeader = ({ activeTab, onTabChange, onConvert, isConverting }) => {
           className={`px-4 py-2 rounded-md transition-all duration-200 ${
             activeTab === 'test' 
               ? 'bg-blue-600 text-white shadow-md' 
-              : 'text-gray-300 hover:text-white hover:bg-gray-700'
+              : !hasOutput 
+                ? 'text-gray-500 bg-gray-700 opacity-50 cursor-not-allowed'
+                : 'text-gray-300 hover:text-white hover:bg-gray-700'
           }`}
-          onClick={() => onTabChange('test')}
+          onClick={() => hasOutput && onTabChange('test')}
+          disabled={!hasOutput}
+          title={!hasOutput ? "Generate output first" : "View output"}
         >
           <div className="flex items-center gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">

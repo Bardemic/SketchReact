@@ -11,10 +11,12 @@ import Button from './Button';
 function Sketch() {
   const [activeTab, setActiveTab] = useState('canvas')
   const [iframeContent, setIframeContent] = useState('<!DOCTYPE html><html><head><title>Loading...</title></head><body><h1>Loading preview...</h1></body></html>');
+  const defaultContent = '<!DOCTYPE html><html><head><title>Loading...</title></head><body><h1>Loading preview...</h1></body></html>';
   const [showCanvasPreview, setShowCanvasPreview] = useState(false);
   const [showCodePreview, setShowCodePreview] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [sketchId, setSketchId] = useState(null);
+  const [hasGeneratedOutput, setHasGeneratedOutput] = useState(false);
   const editorRef = useRef(null);
   const { user } = useAuth();
   const iframeRef = useRef(null);
@@ -22,7 +24,7 @@ function Sketch() {
   const { id } = useParams();
   const location = useLocation();
   const isNewSketch = location.pathname === '/sketch/new';
-
+  
   useEffect(() => {
     const initializeSketch = async () => {
       try {
@@ -88,6 +90,7 @@ function Sketch() {
           // If there's existing page result, load it into the iframe
           if (data.page_result) {
             setIframeContent(data.page_result);
+            setHasGeneratedOutput(true);
           }
         }
       } catch (error) {
@@ -169,6 +172,7 @@ function Sketch() {
       const htmlDoc = await response.text()
       setIframeContent(htmlDoc)
       setShowCanvasPreview(true);
+      setHasGeneratedOutput(true);
 
       // Update the existing sketch with the new page result
       if (sketchId && user) {
@@ -224,6 +228,13 @@ function Sketch() {
   const handleBack = () => {
     navigate(-1);
   };
+
+  // Force redirect to canvas tab if trying to view output without having generated it
+  useEffect(() => {
+    if (activeTab === 'test' && !hasGeneratedOutput) {
+      setActiveTab('canvas');
+    }
+  }, [activeTab, hasGeneratedOutput]);
 
   return (
     <div className="flex flex-col h-screen">
@@ -320,6 +331,7 @@ function Sketch() {
           onTabChange={setActiveTab} 
           onConvert={handleConvertSketch}
           isConverting={isConverting}
+          hasOutput={hasGeneratedOutput}
         />
       </div>
     </div>
