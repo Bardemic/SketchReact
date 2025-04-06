@@ -10,11 +10,7 @@ import json
 
 dotenv.load_dotenv()
 
-app = Flask(__name__)
-CORS(app)
-
-@app.route('/generate', methods=['POST'])
-def generate_html():
+def claude_generate_html(request):
     if 'image' not in request.files:
         return 'No image file provided', 400
         
@@ -104,12 +100,8 @@ def generate_html():
         print(f"Unexpected error: {str(e)}")
         return f'Error generating HTML: {str(e)}', 500
 
-@app.route('/random', methods=['GET'])
-def random():
-    return '''<h1>This is a test</h1>'''
 
-@app.route('/chat', methods=['POST'])
-def chat():
+def claude_chat(request):
     data = request.json
     if not data or 'message' not in data or 'currentHtml' not in data:
         return 'Missing message or current HTML', 400
@@ -187,8 +179,3 @@ def chat():
     except Exception as e:
         print(f"Unexpected error during chat: {str(e)}")
         return f'Error processing chat request: {str(e)}', 500
-
-if __name__ == '__main__':
-    if not os.getenv('ANTHROPIC_API_KEY'):
-        print("Warning: ANTHROPIC_API_KEY is not set in .env file")
-    app.run(debug=True, host='127.0.0.1', port=3000) 

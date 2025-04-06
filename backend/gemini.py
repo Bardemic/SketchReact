@@ -10,11 +10,7 @@ from io import BytesIO
 
 dotenv.load_dotenv()
 
-app = Flask(__name__)
-CORS(app)
-
-@app.route('/generate', methods=['POST'])
-def generate_html():
+def gemini_generate_html(request):
     if 'image' not in request.files:
         return 'No image file provided', 400
         
@@ -78,12 +74,7 @@ def generate_html():
     html_content = html_content.strip()  # Remove any extra whitespace
     return html_content
 
-@app.route('/random', methods=['GET'])
-def random():
-    return '''<h1>This is a test</h1>'''
-
-@app.route('/chat', methods=['POST'])
-def chat():
+def gemini_chat(request):
     data = request.json
     if not data or 'message' not in data or 'currentHtml' not in data:
         return 'Missing message or current HTML', 400
