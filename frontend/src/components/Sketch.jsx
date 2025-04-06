@@ -5,7 +5,7 @@ import CanvasSection from './CanvasSection'
 import { useAuth } from '../contexts/AuthContext'
 import ChatInterface from './ChatInterface'
 
-function Dashboard() {
+function Sketch() {
   const [activeTab, setActiveTab] = useState('canvas')
   const [reactPage, setReactPage] = useState(<div className="text-blue-500 w-full h-full text-2xl">Test 123</div>)
   const [showPreview, setShowPreview] = useState(true)
@@ -122,4 +122,4 @@ function Dashboard() {
   )
 }
 
-export default Dashboard 
+export default Sketch 

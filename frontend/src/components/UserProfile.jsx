@@ -56,10 +56,10 @@ function UserProfile() {
           
           <div className="flex items-center gap-4">
             <Link 
-              to="/dashboard" 
+              to="/sketch" 
               className="text-gray-300 hover:text-white transition-colors duration-300"
             >
-              Dashboard
+              Sketch
             </Link>
             <button
               onClick={handleLogout}
@@ -99,10 +99,10 @@ function UserProfile() {
             
             <div className="mt-8 flex gap-4">
               <Link
-                to="/dashboard"
+                to="/sketch"
                 className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors duration-300"
               >
-                Back to Dashboard
+                Back to Sketch
               </Link>
               
               <button
