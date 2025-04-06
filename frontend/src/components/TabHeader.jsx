@@ -2,7 +2,7 @@ import React from 'react'
 
 const TabHeader = ({ activeTab, onTabChange }) => {
   return (
-    <div className="absolute top-8 left-1/2 right-1/2 flex justify-center items-center">
+    <div className="fixed top-16 left-1/2 transform -translate-x-1/2 flex justify-center items-center z-40">
       <button 
         className={`px-4 py-2 rounded-r-none rounded-l-md ${activeTab === 'canvas' ? 'bg-blue-500 text-white' : 'bg-black hover:bg-blue-700'}`}
         onClick={() => onTabChange('canvas')}

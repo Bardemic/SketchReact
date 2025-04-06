@@ -59,9 +59,15 @@ button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
 }
 
-/* Override tldraw styles if needed */
+/* TLDraw specific styles */
 .tl-container {
   background-color: #242424;
+  height: 100%;
+}
+
+/* Make sure the editor takes full height */
+[data-testid="tl-canvas"] {
+  height: 100vh !important;
 }
 
 @media (prefers-color-scheme: light) {

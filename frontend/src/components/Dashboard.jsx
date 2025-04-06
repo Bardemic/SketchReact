@@ -65,9 +65,9 @@ function Dashboard() {
   }, [])
 
   return (
-    <div className="flex flex-col w-screen h-screen">
+    <div className="flex flex-col h-screen pt-16">
       <div className="flex-1 relative">
-        <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%' }}>
+        <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%', position: 'relative' }}>
           <CanvasSection
             editorRef={editorRef}
             isConverting={isConverting}

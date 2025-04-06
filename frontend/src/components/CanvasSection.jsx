@@ -11,14 +11,14 @@ const CanvasSection = ({
   onTogglePreview,
 }) => {
   return (
-    <div className="w-full h-full">
+    <div className="w-full h-full absolute inset-0">
       <TldrawCanvas editorRef={editorRef} />
       
       {/* Convert Button */}
       <button
         onClick={onConvert}
         disabled={isConverting}
-        className={`absolute top-4 right-4 px-6 py-2 rounded-lg shadow-lg 
+        className={`absolute top-4 right-4 px-6 py-2 rounded-lg shadow-lg z-50
           ${isConverting 
             ? 'bg-gray-400 cursor-not-allowed' 
             : 'bg-green-500 hover:bg-green-600'} 
@@ -30,7 +30,7 @@ const CanvasSection = ({
       {/* Preview Toggle Button */}
       <button
         onClick={onTogglePreview}
-        className="absolute top-4 right-44 px-4 py-2 rounded-lg shadow-lg
+        className="absolute top-4 right-44 px-4 py-2 rounded-lg shadow-lg z-50
           bg-blue-500 hover:bg-blue-600 text-white font-semibold transition-colors"
       >
         {showPreview ? 'Hide Preview' : 'Show Preview'}
