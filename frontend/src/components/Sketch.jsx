@@ -4,12 +4,14 @@ import { useState, useRef, useEffect } from 'react';
 import CanvasSection from './CanvasSection';
 import ChatInterface from './ChatInterface';
 import TabHeader from './TabHeader';
+import CodePreview from './CodePreview';
 import { supabase } from '../lib/supabaseClient';
 
 function Sketch() {
   const [activeTab, setActiveTab] = useState('canvas')
   const [iframeContent, setIframeContent] = useState('<!DOCTYPE html><html><head><title>Loading...</title></head><body><h1>Loading preview...</h1></body></html>');
   const [showCanvasPreview, setShowCanvasPreview] = useState(false);
+  const [showCodePreview, setShowCodePreview] = useState(false);
   const [isConverting, setIsConverting] = useState(false);
   const [sketchId, setSketchId] = useState(null);
   const editorRef = useRef(null);
@@ -209,6 +211,10 @@ function Sketch() {
     setShowCanvasPreview(prev => !prev);
   }
 
+  const handleToggleCodePreview = () => {
+    setShowCodePreview(prev => !prev);
+  }
+
   return (
     <div className="flex flex-col h-screen">
       <div className="absolute top-0 right-0 p-4 z-50 bg-gray-800 w-full h-16 flex justify-end items-center">
@@ -234,9 +240,20 @@ function Sketch() {
           </div>
           
           <div 
-            className="w-full h-full" 
+            className="w-full h-full relative" 
             style={{ display: activeTab === 'test' ? 'block' : 'none' }}
           >
+            <div className="absolute top-4 right-4 z-20">
+              <button
+                onClick={handleToggleCodePreview}
+                className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md shadow-lg flex items-center"
+              >
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                </svg>
+                {showCodePreview ? 'Hide Code' : 'View Code'}
+              </button>
+            </div>
             <iframe
               ref={iframeRef}
               id="preview-iframe"
@@ -244,6 +261,11 @@ function Sketch() {
               title="Website Preview"
               className="w-full max-h-screen max-h-screen h-full border-0"
               sandbox="allow-scripts allow-same-origin allow-forms"
+            />
+            <CodePreview
+              showCodePreview={showCodePreview}
+              onClose={handleToggleCodePreview}
+              htmlContent={iframeContent}
             />
           </div>
         </div>
