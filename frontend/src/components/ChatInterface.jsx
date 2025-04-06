@@ -4,10 +4,13 @@ import Button from './Button'
 
 function ChatInterface({ onSendMessage, iframeId, sketchId }) {
   const [message, setMessage] = useState('')
+  const [isLoading, setIsLoading] = useState(false)
 
   const handleSubmit = async (e) => {
     e.preventDefault()
-    if (!message.trim()) return
+    if (!message.trim() || isLoading) return
+
+    setIsLoading(true)
 
     // Get the current HTML from the iframe
     const iframeElement = document.getElementById(iframeId);
@@ -70,27 +73,31 @@ function ChatInterface({ onSendMessage, iframeId, sketchId }) {
     } catch (error) {
       console.error('Error sending message:', error)
       alert(`Failed to process your request: ${error.message}. Please try again.`)
+    } finally {
+      setIsLoading(false)
     }
   }
 
   return (
     // Use fixed positioning to keep it at the bottom
-    <div className="fixed bottom-12 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40 shadow-lg">
+    <div className="p-2 z-40">
       {/* Added shadow and ensured z-index is below header but above iframe potentially */}
-      <form onSubmit={handleSubmit} className="flex gap-2 max-w-4xl mx-auto">
+      <form onSubmit={handleSubmit} className="flex gap-2 mx-auto">
         <input
           type="text"
           value={message}
           onChange={(e) => setMessage(e.target.value)}
           placeholder="Describe the changes you want to make..."
-          className="flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="flex-1 px-4 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 transition duration-150 ease-in-out disabled:opacity-50"
+          disabled={isLoading}
         />
         <Button
           type="submit"
           variant="primary"
-          className="px-6 py-2"
+          className="px-6 transition duration-150 ease-in-out disabled:opacity-50"
+          disabled={isLoading}
         >
-          Send
+          {isLoading ? 'Sending...' : 'Send'}
         </Button>
       </form>
     </div>
