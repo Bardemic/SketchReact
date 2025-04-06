@@ -246,7 +246,10 @@ function Sketch() {
   };
 
   const handleToggleCanvasPreview = () => {
-    setShowCanvasPreview(prev => !prev);
+    // Only allow toggling if output has been generated
+    if (hasGeneratedOutput) {
+      setShowCanvasPreview(prev => !prev);
+    }
   }
 
   const handleToggleCodePreview = () => {
@@ -310,6 +313,7 @@ function Sketch() {
               onRegenerate={handleConvertSketch}
               onChatMessage={handleChatMessage}
               sketchId={sketchId}
+              hasGeneratedOutput={hasGeneratedOutput}
             />
           </div>
           

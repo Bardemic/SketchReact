@@ -10,7 +10,8 @@ const CanvasSection = ({
   onTogglePreview,
   onRegenerate,
   onChatMessage,
-  sketchId
+  sketchId,
+  hasGeneratedOutput
 }) => {
   const [isStylePanelOpen, setIsStylePanelOpen] = useState(false);
   const [stylePanelHeight, setStylePanelHeight] = useState(0);
@@ -33,9 +34,11 @@ const CanvasSection = ({
       >
         <div className="relative">
           <Button
-            onClick={onTogglePreview}
+            onClick={hasGeneratedOutput ? onTogglePreview : undefined}
             variant="secondary"
-            className="shadow-md p-2 flex items-center gap-2"
+            className={`shadow-md p-2 flex items-center gap-2 ${!hasGeneratedOutput ? 'opacity-50 cursor-not-allowed' : ''}`}
+            disabled={!hasGeneratedOutput}
+            title={!hasGeneratedOutput ? "Generate output first" : "Toggle preview"}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
