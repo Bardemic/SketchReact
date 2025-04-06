@@ -7,6 +7,7 @@ import { useAuth } from '../contexts/AuthContext'
 =======
 import ChatInterface from './ChatInterface'
 >>>>>>> Stashed changes
+import ChatInterface from './ChatInterface'
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('canvas')
@@ -19,6 +20,7 @@ function Dashboard() {
 =======
   const [currentHtml, setCurrentHtml] = useState('')
 >>>>>>> Stashed changes
+  const [currentHtml, setCurrentHtml] = useState('')
 
   const handleConvertSketch = async () => {
     setIsConverting(true)
@@ -54,6 +56,7 @@ function Dashboard() {
 
       const data = await response.text()
       setCurrentHtml(data)
+      setCurrentHtml(data)
       setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />)
       setShowPreview(true)
     } catch (error) {
@@ -71,13 +74,21 @@ function Dashboard() {
     .then(response => response.text())
     .then(data => {
       setCurrentHtml(data)
+      {
+      setCurrentHtml(data)
       setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />)
+    }
     })
   }
 
   useEffect(() => {
     generatePage()
   }, [])
+
+  const handleChatMessage = (newHtml) => {
+    setReactPage(<div dangerouslySetInnerHTML={{__html: newHtml}} />)
+    setCurrentHtml(newHtml)
+  }
 
   const handleChatMessage = (newHtml) => {
     setReactPage(<div dangerouslySetInnerHTML={{__html: newHtml}} />)
@@ -100,7 +111,7 @@ function Dashboard() {
       <div className="flex-1 relative">
 =======
     <div className="flex flex-col h-screen">
-      <div className="flex-1 relative pb-16">
+      <div className="flex-1 relative pb-16 pb-16">
 >>>>>>> Stashed changes
         <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%', position: 'relative' }}>
           <CanvasSection
@@ -118,6 +129,12 @@ function Dashboard() {
         >
           {reactPage}
         </div>
+        {activeTab === 'test' && (
+          <ChatInterface 
+            onSendMessage={handleChatMessage}
+            currentHtml={currentHtml}
+          />
+        )}
         {activeTab === 'test' && (
           <ChatInterface 
             onSendMessage={handleChatMessage}
