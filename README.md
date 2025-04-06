@@ -1,12 +1,11 @@
 <<<<<<< Updated upstream
 # SketchReact
 
-Transform your hand-drawn sketches into functional React components instantly using AI.
+Transform your hand-drawn sketches into functional websites instantly using AI.
 
 ## Features
 
 - Draw UI components using TLDraw's intuitive canvas
-- Convert sketches to React code using Claude and Gemini AI
 - Real-time preview of generated components
 - Save and manage your sketches with Supabase
 - Built-in code editor powered by Monaco Editor
