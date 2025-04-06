@@ -332,7 +332,7 @@ function Sketch() {
                 {showCodePreview ? 'Hide Code' : 'View Code'}
               </button>
             </div>
-            <div className="w-screen h-full p-4 bg-gray-800">
+            <div className="w-screen h-full p-4 bg-background">
               <iframe
                 ref={iframeRef}
                 id="preview-iframe"

@@ -83,7 +83,7 @@ function ChatInterface({ onSendMessage, iframeId, sketchId, iframeContent }) {
 
   return (
     // Use fixed positioning to keep it at the bottom
-    <div className="p-2 z-40">
+    <div className="p-2 z-40 bg-gray-800">
       {/* Added shadow and ensured z-index is below header but above iframe potentially */}
       <form onSubmit={handleSubmit} className="flex gap-2 mx-auto">
         <input
