@@ -3,7 +3,7 @@ import Button from './Button';
 
 const TabHeader = ({ activeTab, onTabChange, onConvert, isConverting }) => {
   return (
-    <div className="fixed top-16 left-1/2 transform -translate-x-1/2 flex justify-center items-center z-40">
+    <div className="fixed top-20 left-1/2 transform -translate-x-1/2 flex justify-center items-center z-40">
       <Button 
         variant="secondary"
         className={`px-4 py-2 rounded-l-md rounded-r-none ${activeTab === 'canvas' ? 'bg-blue-500 text-white' : 'bg-black hover:bg-blue-700'}`}
