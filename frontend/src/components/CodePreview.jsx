@@ -16,7 +16,7 @@ const CodePreview = ({ showCodePreview, onClose, htmlContent, onUpdateCode }) =>
 
   // Define desired visible size (approx 1/4 of 1920x1080)
   const previewWidth = 480; 
-  const previewHeight = 270;
+  const previewHeight = 480;
   
   // Estimate header height
   const headerHeightEstimate = 28; 

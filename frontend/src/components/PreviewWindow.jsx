@@ -26,13 +26,6 @@ const PreviewWindow = ({ showPreview, onClose, htmlContent, onRegenerate, onChat
       }}
     >
       {/* Conditionally render ChatInterface */}
-      {isChatVisible && (
-        <ChatInterface 
-          iframeContent={htmlContent} 
-          onSendMessage={onChatMessage}
-          sketchId={sketchId}
-        />
-      )} 
       {/* Header with Title, Toggle Button, and Close Button */}
       <div className="flex justify-between items-center p-1 px-2 border-b bg-gray-100 flex-shrink-0" // Reduced padding
            style={{ height: `${headerHeightEstimate}px` }} // Give header explicit height
@@ -96,6 +89,15 @@ const PreviewWindow = ({ showPreview, onClose, htmlContent, onRegenerate, onChat
           sandbox="allow-scripts allow-same-origin allow-forms" // Keep sandbox for security
         />
       </div>
+      {isChatVisible && (
+        <div className="border-t border-gray-200 border-1">
+          <ChatInterface
+            iframeContent={htmlContent}
+            onSendMessage={onChatMessage}
+            sketchId={sketchId}
+          />
+        </div>
+      )} 
     </div>
   )
 }
