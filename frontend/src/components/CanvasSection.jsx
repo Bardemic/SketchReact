@@ -12,7 +12,7 @@ const CanvasSection = ({
     <div className="w-full h-full absolute inset-0">
       <TldrawCanvas editorRef={editorRef} />
       
-      <div className="absolute top-4 left-4 z-50">
+      <div className="absolute right-4 bottom-12 z-50">
         <button
           onClick={onTogglePreview}
           className="px-4 py-2 bg-gray-700 hover:bg-gray-600 text-white rounded-md shadow-lg flex items-center"

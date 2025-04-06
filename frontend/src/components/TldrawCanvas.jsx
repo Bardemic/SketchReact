@@ -45,7 +45,8 @@ const TldrawCanvas = ({ editorRef }) => {
         isOpen={isStylePanelOpen} 
         onClose={() => setIsStylePanelOpen(false)} 
       />
-    )
+    ),
+    PageMenu: () => null
   }
 
   return (
@@ -76,7 +77,7 @@ const TldrawCanvas = ({ editorRef }) => {
         onMount={handleMount}
         autoFocus
         showMenu={true}
-        showPages={true}
+        showPages={false}
         showStyles={false}
         showUI={true}
         showToolbar={true}

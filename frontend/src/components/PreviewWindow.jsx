@@ -17,7 +17,7 @@ const PreviewWindow = ({ showPreview, onClose, htmlContent }) => {
   return (
     // Container: Fixed position, size, and styling for the preview window itself
     <div 
-      className="fixed top-20 left-4 bg-white rounded-lg shadow-2xl z-50 overflow-hidden flex flex-col"
+      className="fixed bottom-24 right-4 bg-white rounded-lg shadow-2xl z-50 overflow-hidden flex flex-col"
       style={{ width: `${previewWidth}px`, height: `${previewHeight}px` }}
     >
       {/* Header with Title and Close Button */}
