@@ -99,7 +99,7 @@ function Dashboard() {
               id="preview-iframe"
               srcDoc={iframeContent}
               title="Website Preview"
-              className="w-full h-full border-0"
+              className="w-full max-h-screen max-h-screen h-full border-0"
               sandbox="allow-scripts allow-same-origin allow-forms"
             />
           </div>
