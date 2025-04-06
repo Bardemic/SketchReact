@@ -1,21 +1,22 @@
-import { useState, useEffect, useRef } from 'react'
-import { Link } from 'react-router-dom'
-import TabHeader from './TabHeader'
-import CanvasSection from './CanvasSection'
-import { useAuth } from '../contexts/AuthContext'
-import ChatInterface from './ChatInterface'
+import { Link } from 'react-router-dom';
+import { useAuth } from '../contexts/AuthContext';
+import { useState, useRef } from 'react';
+import CanvasSection from './CanvasSection';
+import ChatInterface from './ChatInterface';
+import TabHeader from './TabHeader';
 
-function Sketch() {
+function Dashboard() {
   const [activeTab, setActiveTab] = useState('canvas')
-  const [reactPage, setReactPage] = useState(<div className="text-blue-500 w-full h-full text-2xl">Test 123</div>)
-  const [showPreview, setShowPreview] = useState(true)
+  const [iframeContent, setIframeContent] = useState('<!DOCTYPE html><html><head><title>Loading...</title></head><body><h1>Loading preview...</h1></body></html>');
+  const [showCanvasPreview, setShowCanvasPreview] = useState(false);
   const [isConverting, setIsConverting] = useState(false)
   const editorRef = useRef(null)
   const { user } = useAuth()
-  const [currentHtml, setCurrentHtml] = useState('')
+  const iframeRef = useRef(null);
 
   const handleConvertSketch = async () => {
     setIsConverting(true)
+    setShowCanvasPreview(false);
     try {
       const editor = editorRef.current
       if (!editor) {
@@ -46,10 +47,9 @@ function Sketch() {
         throw new Error('Failed to convert sketch')
       }
 
-      const data = await response.text()
-      setCurrentHtml(data)
-      setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />)
-      setShowPreview(true)
+      const htmlDoc = await response.text()
+      setIframeContent(htmlDoc)
+      setShowCanvasPreview(true);
     } catch (error) {
       console.error('Error converting sketch:', error)
       alert(error.message)
@@ -58,68 +58,67 @@ function Sketch() {
     }
   }
 
-  const generatePage = async () => {
-    fetch('http://localhost:3000/random', {
-      method: 'GET',
-    })
-    .then(response => response.text())
-    .then(data => {
-      setCurrentHtml(data)
-      setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />)
-    })
+  const handleChatMessage = (newHtmlDoc) => {
+    setIframeContent(newHtmlDoc)
   }
 
-  useEffect(() => {
-    generatePage()
-  }, [])
-
-  const handleChatMessage = (newHtml) => {
-    setReactPage(<div dangerouslySetInnerHTML={{__html: newHtml}} />)
-    setCurrentHtml(newHtml)
+  const handleToggleCanvasPreview = () => {
+    setShowCanvasPreview(prev => !prev);
   }
 
   return (
-    <div className="flex flex-col h-screen pt-16">
-      {/* User profile link */}
-      <div className="absolute top-0 right-0 p-4 z-50">
+    <div className="flex flex-col h-screen">
+      <div className="absolute top-0 right-0 p-4 z-50 bg-gray-800 w-full h-16 flex justify-end items-center">
         <Link 
           to="/profile"
-          className="text-sm text-gray-300 hover:text-white transition-colors duration-300"
+          className="text-sm text-gray-300 hover:text-white transition-colors duration-300 mr-4"
         >
           {user?.email || 'Profile'} ▾
         </Link>
       </div>
       
-      <div className="flex-1 relative">
-        <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%', position: 'relative' }}>
-          <CanvasSection
-            editorRef={editorRef}
-            isConverting={isConverting}
-            showPreview={showPreview}
-            reactPage={reactPage}
-            onConvert={handleConvertSketch}
-            onTogglePreview={() => setShowPreview(!showPreview)}
-          />
+      <div className="flex-1 flex flex-col pt-16">
+        <div className="flex-1 relative">
+          <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%' }}>
+            <CanvasSection
+              editorRef={editorRef}
+              isConverting={isConverting}
+              previewContent={iframeContent}
+              showPreview={showCanvasPreview}
+              onTogglePreview={handleToggleCanvasPreview}
+              onConvert={handleConvertSketch}
+            />
+          </div>
+          
+          <div 
+            className="w-full h-full" 
+            style={{ display: activeTab === 'test' ? 'block' : 'none' }}
+          >
+            <iframe
+              ref={iframeRef}
+              id="preview-iframe"
+              srcDoc={iframeContent}
+              title="Website Preview"
+              className="w-full h-full border-0"
+              sandbox="allow-scripts allow-same-origin allow-forms"
+            />
+          </div>
         </div>
-        <div 
-          className="w-full h-full flex items-center justify-center" 
-          style={{ display: activeTab === 'test' ? 'flex' : 'none' }}
-        >
-          {reactPage}
-        </div>
+
         {activeTab === 'test' && (
           <ChatInterface 
             onSendMessage={handleChatMessage}
-            currentHtml={currentHtml}
+            iframeId="preview-iframe"
           />
         )}
+
+        <TabHeader 
+          activeTab={activeTab} 
+          onTabChange={setActiveTab} 
+        />
       </div>
-      <TabHeader 
-        activeTab={activeTab} 
-        onTabChange={setActiveTab} 
-      />
     </div>
-  )
+  );
 }
 
-export default Sketch 
+export default Dashboard; 
