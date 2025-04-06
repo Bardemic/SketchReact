@@ -2,11 +2,7 @@ import { useState, useEffect, useRef } from 'react'
 import { Link } from 'react-router-dom'
 import TabHeader from './TabHeader'
 import CanvasSection from './CanvasSection'
-<<<<<<< Updated upstream
 import { useAuth } from '../contexts/AuthContext'
-=======
-import ChatInterface from './ChatInterface'
->>>>>>> Stashed changes
 import ChatInterface from './ChatInterface'
 
 function Dashboard() {
@@ -15,11 +11,7 @@ function Dashboard() {
   const [showPreview, setShowPreview] = useState(true)
   const [isConverting, setIsConverting] = useState(false)
   const editorRef = useRef(null)
-<<<<<<< Updated upstream
   const { user } = useAuth()
-=======
-  const [currentHtml, setCurrentHtml] = useState('')
->>>>>>> Stashed changes
   const [currentHtml, setCurrentHtml] = useState('')
 
   const handleConvertSketch = async () => {
@@ -56,7 +48,6 @@ function Dashboard() {
 
       const data = await response.text()
       setCurrentHtml(data)
-      setCurrentHtml(data)
       setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />)
       setShowPreview(true)
     } catch (error) {
@@ -74,10 +65,7 @@ function Dashboard() {
     .then(response => response.text())
     .then(data => {
       setCurrentHtml(data)
-      {
-      setCurrentHtml(data)
       setReactPage(<div dangerouslySetInnerHTML={{__html: data}} />)
-    }
     })
   }
 
@@ -90,13 +78,7 @@ function Dashboard() {
     setCurrentHtml(newHtml)
   }
 
-  const handleChatMessage = (newHtml) => {
-    setReactPage(<div dangerouslySetInnerHTML={{__html: newHtml}} />)
-    setCurrentHtml(newHtml)
-  }
-
   return (
-<<<<<<< Updated upstream
     <div className="flex flex-col h-screen pt-16">
       {/* User profile link */}
       <div className="absolute top-0 right-0 p-4 z-50">
@@ -109,10 +91,6 @@ function Dashboard() {
       </div>
       
       <div className="flex-1 relative">
-=======
-    <div className="flex flex-col h-screen">
-      <div className="flex-1 relative pb-16 pb-16">
->>>>>>> Stashed changes
         <div style={{ display: activeTab === 'canvas' ? 'block' : 'none', height: '100%', position: 'relative' }}>
           <CanvasSection
             editorRef={editorRef}
@@ -129,12 +107,6 @@ function Dashboard() {
         >
           {reactPage}
         </div>
-        {activeTab === 'test' && (
-          <ChatInterface 
-            onSendMessage={handleChatMessage}
-            currentHtml={currentHtml}
-          />
-        )}
         {activeTab === 'test' && (
           <ChatInterface 
             onSendMessage={handleChatMessage}
