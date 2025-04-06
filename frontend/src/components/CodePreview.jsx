@@ -1,8 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import Button from './Button';
+import Editor from '@monaco-editor/react';
 
-const CodePreview = ({ showCodePreview, onClose, htmlContent }) => {
+const CodePreview = ({ showCodePreview, onClose, htmlContent, onUpdateCode }) => {
   const [copied, setCopied] = useState(false);
+  const [editedContent, setEditedContent] = useState(htmlContent);
+
+  useEffect(() => {
+    setEditedContent(htmlContent);
+  }, [htmlContent]);
 
   if (!showCodePreview) {
     return null
@@ -16,7 +22,7 @@ const CodePreview = ({ showCodePreview, onClose, htmlContent }) => {
   const headerHeightEstimate = 28; 
 
   const handleCopyCode = () => {
-    navigator.clipboard.writeText(htmlContent)
+    navigator.clipboard.writeText(editedContent)
       .then(() => {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000); // Reset after 2 seconds
@@ -24,6 +30,11 @@ const CodePreview = ({ showCodePreview, onClose, htmlContent }) => {
       .catch(err => {
         console.error('Failed to copy: ', err);
       });
+  };
+
+  const handleEditorChange = (value) => {
+    setEditedContent(value);
+    onUpdateCode(value);
   };
 
   return (
@@ -60,15 +71,27 @@ const CodePreview = ({ showCodePreview, onClose, htmlContent }) => {
 
       {/* Code Container */}
       <div 
-        className="flex-1 overflow-auto bg-gray-900 p-2"
+        className="flex-1 overflow-hidden bg-gray-900"
         style={{ 
           width: `${previewWidth}px`, 
           height: `${previewHeight - headerHeightEstimate}px`,
         }}
       >
-        <pre className="text-gray-300 text-xs font-mono whitespace-pre-wrap">
-          {htmlContent}
-        </pre>
+        <Editor
+          height="100%" 
+          language="html"
+          theme="vs-dark"
+          value={editedContent}
+          onChange={handleEditorChange}
+          options={{
+            minimap: { enabled: false },
+            fontSize: 12,
+            wordWrap: 'on',
+            scrollBeyondLastLine: false,
+            automaticLayout: true,
+            padding: { top: 10, bottom: 10 }
+          }}
+        />
       </div>
     </div>
   )

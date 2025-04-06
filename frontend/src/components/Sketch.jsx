@@ -215,7 +215,35 @@ function Sketch() {
 
   const handleChatMessage = (newHtmlDoc) => {
     setIframeContent(newHtmlDoc)
+    // Note: Saving to DB is handled within ChatInterface handleSubmit
   }
+
+  // Handler for code updates from CodePreview
+  const handleCodeUpdate = async (updatedHtml) => {
+    setIframeContent(updatedHtml); // Update the iframe content in the UI
+
+    // Save the updated HTML to the database
+    if (sketchId && user) {
+      try {
+        const { error } = await supabase
+          .from('sketches')
+          .update({
+            page_result: updatedHtml,
+            last_modified: new Date().toISOString()
+          })
+          .eq('id', sketchId)
+          .eq('user_id', user.id);
+
+        if (error) {
+          console.error('Error updating sketch from CodePreview:', error);
+          throw new Error('Failed to save code changes to database');
+        }
+      } catch (error) {
+        console.error('Error saving updated code:', error);
+        alert(`Failed to save code changes: ${error.message}`);
+      }
+    }
+  };
 
   const handleToggleCanvasPreview = () => {
     setShowCanvasPreview(prev => !prev);
@@ -314,6 +342,7 @@ function Sketch() {
               showCodePreview={showCodePreview}
               onClose={handleToggleCodePreview}
               htmlContent={iframeContent}
+              onUpdateCode={handleCodeUpdate}
             />
           </div>
         </div>
