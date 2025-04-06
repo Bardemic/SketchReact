@@ -1,6 +1,7 @@
 import { useState } from 'react'
+import { supabase } from '../lib/supabaseClient'
 
-function ChatInterface({ onSendMessage, iframeId }) {
+function ChatInterface({ onSendMessage, iframeId, sketchId }) {
   const [message, setMessage] = useState('')
 
   const handleSubmit = async (e) => {
@@ -44,7 +45,26 @@ function ChatInterface({ onSendMessage, iframeId }) {
       }
 
       const newHtml = await response.text()
-      onSendMessage(newHtml) // Send the new HTML back to Dashboard
+      
+      // Update the page in the UI
+      onSendMessage(newHtml)
+
+      // Update the database with the new HTML
+      if (sketchId) {
+        const { error } = await supabase
+          .from('sketches')
+          .update({
+            page_result: newHtml,
+            last_modified: new Date().toISOString()
+          })
+          .eq('id', sketchId);
+
+        if (error) {
+          console.error('Error updating sketch in database:', error);
+          throw new Error('Failed to save changes to database');
+        }
+      }
+
       setMessage('') // Clear input
     } catch (error) {
       console.error('Error sending message:', error)

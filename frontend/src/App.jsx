@@ -25,7 +25,15 @@ function App() {
             } 
           />
           <Route 
-            path="/sketch" 
+            path="/sketch/new" 
+            element={
+              <ProtectedRoute>
+                <Sketch />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/sketch/:id" 
             element={
               <ProtectedRoute>
                 <Sketch />
