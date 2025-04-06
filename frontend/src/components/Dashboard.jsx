@@ -1,5 +1,9 @@
 import { Link } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { useState, useRef } from 'react';
+import CanvasSection from './CanvasSection';
+import ChatInterface from './ChatInterface';
+import TabHeader from './TabHeader';
 
 function Dashboard() {
   const [activeTab, setActiveTab] = useState('canvas')
