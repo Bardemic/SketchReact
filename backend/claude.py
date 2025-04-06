@@ -108,6 +108,85 @@ def generate_html():
 def random():
     return '''<h1>This is a test</h1>'''
 
+@app.route('/chat', methods=['POST'])
+def chat():
+    data = request.json
+    if not data or 'message' not in data or 'currentHtml' not in data:
+        return 'Missing message or current HTML', 400
+    
+    user_message = data['message']
+    current_html = data['currentHtml']
+
+    # Ensure current_html is treated as a full document if it isn't already
+    # (Claude works best with full documents for context)
+    if not current_html.strip().lower().startswith(('<!doctype html>', '<html')):
+        print("Warning: Received partial HTML for chat. Wrapping in basic structure.")
+        current_html = f"<!DOCTYPE html>\n<html>\n<head><title>Preview</title></head>\n<body>\n{current_html}\n</body>\n</html>"
+
+    prompt = f'''
+    You are an expert front-end developer.
+    A user wants to modify the following HTML code based on their request.
+
+    User Request:
+    """
+    {user_message}
+    """
+
+    Current HTML:
+    """
+    {current_html}
+    """
+
+    Please provide the complete, modified HTML code that incorporates the user's request.
+    Preserve the existing structure, functionality, and styling (including Tailwind classes and any inline styles or scripts like the drag-and-drop handlers) as much as possible.
+    Only respond with the raw, complete HTML code, starting with <!DOCTYPE html> or <html> and ending with </html>. Do not include any explanations, apologies, or markdown formatting like ```html ... ```.
+    '''
+
+    try:
+        client = anthropic.Anthropic(
+            api_key=os.getenv('ANTHROPIC_API_KEY')
+        )
+
+        # Using Claude Sonnet 3.5 as it's generally good for coding tasks
+        # You might adjust the model based on desired capability/cost
+        message = client.messages.create(
+            model="claude-3-5-sonnet-20240620", 
+            max_tokens=4000, # Adjust max_tokens if needed
+            messages=[
+                {
+                    "role": "user",
+                    "content": [
+                        {
+                            "type": "text",
+                            "text": prompt
+                        }
+                    ]
+                }
+            ]
+        )
+        
+        modified_html_content = message.content[0].text.strip()
+        
+        # Basic cleanup (sometimes models still add markdown)
+        if modified_html_content.startswith("```html"):
+            modified_html_content = modified_html_content[7:]
+        if modified_html_content.endswith("```"):
+            modified_html_content = modified_html_content[:-3]
+        modified_html_content = modified_html_content.strip()
+
+        # Ensure it looks like a full HTML document
+        if not modified_html_content.strip().lower().startswith(('<!doctype html>', '<html')):
+             print("Warning: Claude chat response didn't start with <!doctype html> or <html>. Returning as is.")
+             # Avoid wrapping here as it might hide the actual model error/output
+
+        return modified_html_content
+        
+    except anthropic.APIError as e:
+        print(f"Claude Chat API error: {str(e)}")
+        return f'Claude API error during chat: {str(e)}', 500
+    except Exception as e:
+        print(f"Unexpected error during chat: {str(e)}")
+        return f'Error processing chat request: {str(e)}', 500
 
 if __name__ == '__main__':
     if not os.getenv('ANTHROPIC_API_KEY'):

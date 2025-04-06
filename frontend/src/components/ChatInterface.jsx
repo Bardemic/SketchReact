@@ -1,11 +1,29 @@
 import { useState } from 'react'
 
-function ChatInterface({ onSendMessage, currentHtml }) {
+function ChatInterface({ onSendMessage, iframeId }) {
   const [message, setMessage] = useState('')
 
   const handleSubmit = async (e) => {
     e.preventDefault()
     if (!message.trim()) return
+
+    // Get the current HTML from the iframe
+    const iframeElement = document.getElementById(iframeId);
+    let currentHtml = '';
+    if (iframeElement && iframeElement.contentWindow && iframeElement.contentWindow.document) {
+      // Get the full HTML document from the iframe
+      currentHtml = iframeElement.contentWindow.document.documentElement.outerHTML;
+    } else {
+      console.error('Could not access iframe content.');
+      alert('Error: Could not read current preview content.');
+      return; // Stop if we can't get the HTML
+    }
+
+    // Make sure we actually got some HTML
+    if (!currentHtml) {
+        alert('Error: Preview content is empty.');
+        return;
+    }
 
     try {
       const response = await fetch('http://localhost:3000/chat', {
@@ -15,25 +33,29 @@ function ChatInterface({ onSendMessage, currentHtml }) {
         },
         body: JSON.stringify({
           message,
-          currentHtml
+          currentHtml // Send the iframe's current HTML
         })
       })
 
       if (!response.ok) {
-        throw new Error('Failed to send message')
+        // Provide more specific error feedback if possible
+        const errorText = await response.text();
+        throw new Error(`Failed to send message: ${response.status} ${errorText}`);
       }
 
       const newHtml = await response.text()
-      onSendMessage(newHtml)
-      setMessage('')
+      onSendMessage(newHtml) // Send the new HTML back to Dashboard
+      setMessage('') // Clear input
     } catch (error) {
       console.error('Error sending message:', error)
-      alert('Failed to process your request. Please try again.')
+      alert(`Failed to process your request: ${error.message}. Please try again.`)
     }
   }
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 p-4">
+    // Use fixed positioning to keep it at the bottom
+    <div className="fixed bottom-12 left-0 right-0 bg-white border-t border-gray-200 p-4 z-40 shadow-lg">
+      {/* Added shadow and ensured z-index is below header but above iframe potentially */}
       <form onSubmit={handleSubmit} className="flex gap-2 max-w-4xl mx-auto">
         <input
           type="text"

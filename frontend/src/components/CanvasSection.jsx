@@ -5,8 +5,8 @@ import PreviewWindow from './PreviewWindow'
 const CanvasSection = ({ 
   editorRef, 
   isConverting, 
+  previewContent,
   showPreview, 
-  reactPage,
   onConvert,
   onTogglePreview,
 }) => {
@@ -38,8 +38,10 @@ const CanvasSection = ({
       <PreviewWindow 
         showPreview={showPreview} 
         onClose={onTogglePreview}
+        htmlContent={previewContent}
       >
-        {reactPage}
+        {/* Remove children prop if PreviewWindow handles content internally */}
+        {/* {reactPage} */}
       </PreviewWindow>
     </div>
   )
