@@ -1,4 +1,4 @@
-# SketchReact
+# WebSketch
 
 Transform your hand-drawn sketches into functional websites instantly using AI.
 
