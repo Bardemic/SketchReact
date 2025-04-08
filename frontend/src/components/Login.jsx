@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { supabase } from '../lib/supabaseClient';
 import Button from './Button';
+import logo from '../assets/logo.svg';
 
 function Login() {
   const [email, setEmail] = useState('');
@@ -48,9 +49,10 @@ function Login() {
       <nav className="bg-gray-900 py-4 px-6 shadow-md">
         <div className="container mx-auto flex justify-between items-center">
           <Link 
-            to="/" 
-            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+            to="/"
+            className="flex items-center text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 gap-2"
           >
+            <img src={logo} alt="WebSketch Logo" className="w-8 h-8" />
             WebSketch
           </Link>
         </div>

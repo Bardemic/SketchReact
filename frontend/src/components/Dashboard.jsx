@@ -5,6 +5,7 @@ import { supabase } from '../lib/supabaseClient';
 import Button from './Button';
 import SketchesGrid from './SketchesGrid';
 import { useNavigate } from 'react-router-dom';
+import logo from '../assets/logo.svg';
 
 function Dashboard() {
   const { user } = useAuth();
@@ -45,8 +46,9 @@ function Dashboard() {
         <div className="container mx-auto flex justify-between items-center">
           <Link 
             to="/" 
-            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 flex items-center gap-2"
           >
+            <img src={logo} alt="WebSketch Logo" className="w-8 h-8" />
             WebSketch
           </Link>
           <div className="flex items-center gap-4">

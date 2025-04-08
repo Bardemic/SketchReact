@@ -3,6 +3,7 @@ import { useAuth } from '../contexts/AuthContext';
 import { supabase } from '../lib/supabaseClient';
 import { Link, useNavigate } from 'react-router-dom';
 import Button from './Button';
+import logo from '../assets/logo.svg';
 
 function UserProfile() {
   const { user, logout } = useAuth();
@@ -65,8 +66,9 @@ function UserProfile() {
         <div className="container mx-auto flex justify-between items-center">
           <Link 
             to="/" 
-            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600"
+            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 flex items-center gap-2"
           >
+            <img src={logo} alt="WebSketch Logo" className="w-8 h-8" />
             WebSketch
           </Link>
           
