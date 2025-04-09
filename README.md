@@ -2,6 +2,7 @@
 
 Transform your hand-drawn sketches into functional websites instantly using AI.
 
+Built for Wildhacks 2025. Continuing to be built in private. This repo is now an archive.
 ## Features
 
 - Draw UI components using TLDraw's intuitive canvas
@@ -21,7 +22,7 @@ Transform your hand-drawn sketches into functional websites instantly using AI.
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/SketchReact.git
+   git clone https://github.com/Bardmemic/SketchReact.git
    cd SketchReact
    ```
 
@@ -69,6 +70,7 @@ Transform your hand-drawn sketches into functional websites instantly using AI.
 
 ### Database
 - Supabase (User Data & Sketch Storage)
+
 
 ## Acknowledgments
 
