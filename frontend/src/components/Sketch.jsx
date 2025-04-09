@@ -7,7 +7,7 @@ import TabHeader from './TabHeader';
 import CodePreview from './CodePreview';
 import { supabase } from '../lib/supabaseClient';
 import Button from './Button';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 function Sketch() {
   const [activeTab, setActiveTab] = useState('canvas')
@@ -275,9 +275,9 @@ function Sketch() {
         <div className="container mx-auto flex justify-between items-center">
           <Link 
             to="/" 
-            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 flex items-center gap-2"
+            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 flex items-center gap-1"
           >
-            <img src={logo} alt="WebSketch Logo" className="w-8 h-8" />
+            <img src={logo} alt="WebSketch Logo" className="w-12 h-16" />
             WebSketch
           </Link>
           <div className="flex items-center gap-4">

@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useAuth } from '../contexts/AuthContext';
 import Button from './Button';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 function LandingPage() {
   const { isAuthenticated, user, loading } = useAuth();
@@ -31,9 +31,9 @@ function LandingPage() {
         <div className="container mx-auto flex justify-between items-center">
           <Link 
             to="/" 
-            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 flex items-center gap-2"
+            className="text-xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600 flex items-center gap-1"
           >
-            <img src={logo} alt="WebSketch Logo" className="w-8 h-8" />
+            <img src={logo} alt="WebSketch Logo" className="w-12 h-16" />
             WebSketch
           </Link>
           
@@ -77,8 +77,8 @@ function LandingPage() {
       {/* Hero Section */}
       <div className="container mx-auto px-4 pt-32 pb-32">
         <div className="flex flex-col items-center text-center">
-          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 flex items-center gap-4">
-            <img src={logo} alt="WebSketch Logo" className="w-16 h-16" />
+          <h1 className="text-5xl md:text-7xl font-extrabold mb-6 flex items-center gap-2">
+            <img src={logo} alt="WebSketch Logo" className="w-24 h-32" />
             <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 drop-shadow-[0_1.2px_1.2px_rgba(0,0,0,0.8)]">
               WebSketch
             </span>

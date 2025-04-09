@@ -1,6 +1,6 @@
 import { Link } from 'react-router-dom';
 import Button from './Button';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 function ForbiddenError() {
   return (
@@ -8,8 +8,8 @@ function ForbiddenError() {
       {/* Navbar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-transparent py-6">
         <div className="container mx-auto px-4 flex justify-between items-center">
-          <Link to="/" className="text-xl font-bold flex items-center gap-2">
-            <img src={logo} alt="WebSketch Logo" className="w-8 h-8" />
+          <Link to="/" className="text-xl font-bold flex items-center gap-1">
+            <img src={logo} alt="WebSketch Logo" className="w-12 h-16" />
             WebSketch
           </Link>
           

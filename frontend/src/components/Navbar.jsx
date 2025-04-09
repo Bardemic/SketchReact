@@ -1,6 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import Button from './Button';
-import logo from '../assets/logo.svg';
+import logo from '../assets/logo.png';
 
 function Navbar() {
   const location = useLocation();
@@ -9,8 +9,8 @@ function Navbar() {
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[1000] ${isLandingPage ? 'bg-transparent py-6' : 'bg-gray-900 py-3'}`}>
       <div className="container mx-auto px-4 flex justify-between items-center">
-        <Link to="/" className="text-xl font-bold text-white flex items-center gap-2">
-          <img src={logo} alt="WebSketch Logo" className="w-8 h-8" />
+        <Link to="/" className="text-xl font-bold text-white flex items-center gap-1">
+          <img src={logo} alt="WebSketch Logo" className="w-12 h-16" />
           <span className="bg-clip-text text-transparent bg-gradient-to-r from-blue-400 to-purple-600">
             WebSketch
           </span>
